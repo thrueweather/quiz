@@ -1,0 +1,97 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+.quiz {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+}
+.quiz h1 { text-align: center; }
+.quiz-wrapp {
+    background-color: #ffae00;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    text-align: left;
+    padding: 20px;
+}
+.quiz-wrapp ul { margin: 0; padding: 0; }
+.quiz-wrapp ul li { list-style: none; }
+.quiz-wrapp ul li h3 {
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 25px;
+}
+.radio { display: none; }
+.radio-custom {
+	width: 13px;
+	height: 13px;
+	border: 7px solid white;
+	border-radius: 3px;
+    position: relative;
+    margin-right: 10px;
+}
+.radio-custom,
+.label { display: inline-block; vertical-align: middle; }
+.radio:checked + .radio-custom::before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	bottom: 2px;
+	left: 2px;
+	background: #413548;
+	border-radius: 2px;
+}
+.radio-custom,
+.radio:checked + .radio-custom::before { border-radius: 50%; cursor: pointer; }
+.answers { text-align: center; }
+.answers h1 { margin: 0; font-size: 60px; }
+.answers button {
+    outline: none;
+    background-color: transparent;
+    border: 2px solid #8B4513;
+    border-radius: 5px;
+    padding: 6px 20px;
+    cursor: pointer;
+    color: #8B4513;
+}
+.show-answers{ text-align: left; }
+.logo h3 {
+    text-shadow: 0px 6px 10px rgba(0,0,0,0.32);
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 2px;
+    font-size: 30px;
+    color: white;
+    margin: 0;
+}
+.logo h1 {
+    font-family: 'Gloria Hallelujah', cursive;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 40px;
+    margin: 0;
+}
+.logo span { 
+    border-top: 2px solid #8B4513; border-bottom: 2px solid #8B4513;
+    font-size: 4px; margin: 0 10px;
+    color: transparent;
+}
+@media only screen and (max-width : 768px) {
+    .quiz-wrapp ul li h3 { font-size: 1.5em; }
+    .label { font-size: 15px; }
+    .quiz-wrapp { padding: 10px 5px; }
+    .show-answers { text-align: left; font-size: 14px; }
+    .show-answers ul { margin: 0; padding: 0 10px; }
+}
+@media only screen and (max-width : 400px) {
+    .quiz-wrapp ul li h3 { font-size: 1em; }
+    .radio-custom { height: 10px; width: 10px; }
+    .label { font-size: 13px; }
+    .logo h3 { font-size: 25px; }
+    .logo h1 { font-size: 35px; }
+    .quiz h1 { font-size: 30px; }
+}
