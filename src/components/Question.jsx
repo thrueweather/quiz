@@ -7,12 +7,12 @@ class Question extends Component {
         count: 0, // array visible
         truths: 0, // truths answers
         show: false, // answers visible
-        minutes: 7, 
-        seconds: 30
+        minutes: 6,
+        seconds: 0
     }
 
     componentWillMount() {
-        setTimeout(this.handlerTimer, 100)
+        setTimeout(this.timer, 100)
     }
 
     handlerClick = answer => {
@@ -27,26 +27,24 @@ class Question extends Component {
         setTimeout(() =>  this.setState({ count: this.state.count + 1 }), 300)
     }
 
-    handlerTimer = () => {
-        const decrementSeconds = setInterval(() => {
-            if (this.state.seconds === 0) {
-                this.setState((state, props) => {
-                    return {
-                        seconds: state.seconds = 60,
-                        minutes: state.minutes - 1
-                    }
-                })
-            } 
-            this.setState({ seconds: this.state.seconds - 1 })
-            if (this.state.minutes === 0 && this.state.seconds === 0) {
-                setTimeout(() => {
-                    alert(`Time is over! Correct answers ${this.state.truths} from ${this.props.issues.length} questions`);
-                    clearInterval(decrementSeconds); // stop the timer
-                    this.setState({ count: 15 }) // array visibility
-                }, 500)
-            }
-        }, 1000)
-    }
+    handlerTimer = setInterval(() => {
+        if (this.state.seconds === 0) {
+            this.setState((state, props) => {
+                return {
+                    seconds: state.seconds = 60,
+                    minutes: state.minutes - 1
+                }
+            })
+        } 
+        this.setState({ seconds: this.state.seconds - 1 })
+        if (this.state.minutes === 0 && this.state.seconds === 0) {
+            setTimeout(() => {
+                alert(`Time is over! Correct answers ${this.state.truths} from ${this.props.issues.length} questions`);
+                clearInterval(this.handlerTimer); // stop the timer
+                this.setState({ count: 15 }) // array visibility
+            }, 500)
+        }
+    }, 1000)
 
     switchOnAnswers = () => this.setState({ show: !this.state.show })
  
