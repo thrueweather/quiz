@@ -4,10 +4,10 @@ import Logo from './logo';
 
 class Question extends Component {
     state = {
-        count: 0, // array visible
-        truths: 0, // truths answers
-        show: false, // answers visible
-        minutes: 6,
+        count: 0, 
+        truths: 0, 
+        show: false, 
+        minutes: 7, 
         seconds: 0
     }
 
@@ -29,19 +29,17 @@ class Question extends Component {
 
     handlerTimer = setInterval(() => {
         if (this.state.seconds === 0) {
-            this.setState((state, props) => {
-                return {
-                    seconds: state.seconds = 60,
-                    minutes: state.minutes - 1
-                }
-            })
+            this.setState(state => ({
+                seconds: state.seconds = 60,
+                minutes: state.minutes - 1
+            }))
         } 
         this.setState({ seconds: this.state.seconds - 1 })
         if (this.state.minutes === 0 && this.state.seconds === 0) {
             setTimeout(() => {
                 alert(`Time is over! Correct answers ${this.state.truths} from ${this.props.issues.length} questions`);
-                clearInterval(this.handlerTimer); // stop the timer
-                this.setState({ count: 15 }) // array visibility
+                clearInterval(this.handlerTimer); 
+                this.setState({ count: 15 })
             }, 500)
         }
     }, 1000)
@@ -85,9 +83,12 @@ class Question extends Component {
 
         const Issues = () => {
             if(this.state.count - 1 === this.props.issues.length - 1) {
+                clearInterval(this.handlerTimer);
                 return (
                     <div className="answers">
-                        <h1>{this.state.truths}/{this.props.issues.length}</h1>
+                        <h1>
+                            {this.state.truths}/{this.props.issues.length} behind {this.state.minutes}:{this.state.seconds.toFixed(0)}
+                        </h1>
                         <button 
                             onClick={() => this.switchOnAnswers()}>
                             <h3>{this.state.show === false ? 'Show answers' : 'Hide answers'}</h3>
