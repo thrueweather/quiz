@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Question from './Question'
 
 export default class Issues extends Component {
@@ -159,7 +160,9 @@ export default class Issues extends Component {
 
     render() {
         return (
-            <Question issues={this.state.issues}/>
+            <div className="App">
+                <Question issues={this.state.issues}/>
+            </div>
         )
     }
 }
