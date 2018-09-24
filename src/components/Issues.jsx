@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Question from './Question'
+import Question from './Questions'
 
 export default class Issues extends Component {
     state = {

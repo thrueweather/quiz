@@ -10,8 +10,7 @@ const Logo = () => {
         <div className="logo">
             <h3>Your</h3>
             <h1>Spirit</h1> 
-            <div
-                style={style}>
+            <div style={style}>
                 <span>helloworldloremipsum</span><h3>Grilled Chesse</h3><span>helloworldloremipsum</span>
             </div>
         </div>

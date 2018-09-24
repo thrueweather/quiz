@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
-import Ionicon from 'react-ionicons';
 
-import Logo from './logo';
+import { 
+    ZERO, 
+    MINUTE, 
+    MINUTE_DECREMENT, 
+    SECONDS_DECREMENT, 
+    ARRAY_VISIBILITY 
+} from '../constants/types'
 
-class Question extends Component {
+import ShowAnswers from './ShowAnswers'
+import Length from './Length'
+
+import Logo from './logo'
+
+export default class Questions extends Component {
     constructor(props) {
         super(props);
 
@@ -14,10 +24,6 @@ class Question extends Component {
             minutes: 7, 
             seconds: 0
         }
-    }
-
-    componentWillMount() {
-        setTimeout(this.timer, 100)
     }
 
     handlerClick = answer => {
@@ -33,12 +39,6 @@ class Question extends Component {
     }
 
     handlerTimer = setInterval(() => {
-        const ZERO = 0;
-        const MINUTE = 60;
-        const MINUTE_DECREMENT = 1;
-        const SECONDS_DECREMENT = 1;
-        const ARRAY_VISIBILITY = 15;
-
         if (this.state.seconds === ZERO) {
             this.setState(state => ({
                 seconds: MINUTE,
@@ -58,53 +58,21 @@ class Question extends Component {
     switchOnAnswers = () => this.setState({ show: !this.state.show })
  
     render() {
-        const length = <h1 style={{ margin: 0 }}>{this.state.count + 1}/{this.props.issues.length}</h1>
+        const { show, truths, minutes, seconds, count } = this.state
 
-        const Timeout = () => (
-            <p>
-                {this.state.minutes < 10 ? 0 : undefined}{this.state.minutes}:
-                {this.state.seconds < 10 ? 0 : undefined}{this.state.seconds}
-            </p>
-        )
+        const ViewShowAnswers = show && <ShowAnswers issues={this.props.issues}/>
 
-        const ShowAnswers = () => {
-            return (
-                <div className="show-answers">
-                    {this.props.issues.map((item, index) => 
-                        <ul key={index}>
-                            <li><h3>{item.title}</h3></li>
-                            <li style={{listStyle: 'none'}}>
-                                {item.answers.map((answer, index) => 
-                                    <p key={index}>
-                                        {`${answer.answer} `}
-                                        {answer.isTrue ? 
-                                            <Ionicon icon="md-checkmark" fontSize="25px" color="green"/> : 
-                                            <Ionicon icon="md-close" fontSize="25px" color="red"/>
-                                        }
-                                    </p>
-                                )}
-                            </li>
-                        </ul>
-                    )}
-                </div>
-            )
-        }
-
-        const ViewShowAnswers = this.state.show && <ShowAnswers/>
-
-        const correctAnswersAndTime = <h1>
-                {this.state.truths}/{this.props.issues.length} behind {this.state.minutes}:{this.state.seconds.toFixed(0)}
-        </h1>
+        const correctAnswersAndTime = 
+            <h1>{truths}/{this.props.issues.length} behind {minutes}:{seconds.toFixed(0)}</h1>
 
         const Issues = () => {
-            if(this.state.count - 1 === this.props.issues.length - 1) {
+            if(count - 1 === this.props.issues.length - 1) {
                 clearInterval(this.handlerTimer);
                 return (
                     <div className="answers">
                         {correctAnswersAndTime}
-                        <button 
-                            onClick={() => this.switchOnAnswers()}>
-                            <h3>{!this.state.show ? 'Show answers' : 'Hide answers'}</h3>
+                        <button onClick={() => this.switchOnAnswers()}>
+                            <h3>{!show ? 'Show answers' : 'Hide answers'}</h3>
                         </button>
                         {ViewShowAnswers}
                     </div>
@@ -113,8 +81,8 @@ class Question extends Component {
                 return (
                     <div className="quiz">
                         <Logo/>
-                        {length}
-                        <Timeout/>
+                        <Length count={count} issues={this.props.issues}/>
+                        <p>{minutes < 10 ? 0 : null}{minutes}:{seconds < 10 ? 0 : null}{seconds}</p>
                         <div className="quiz-wrapp">  
                             {this.props.issues.map((item, index) => 
                                 <ul key={index}>
@@ -136,17 +104,13 @@ class Question extends Component {
                                         )}
                                     </li>
                                 </ul>
-                            )[`${this.state.count}`]} <br/>
+                            )[`${count}`]} <br/>
                         </div>
                     </div>
                 )
             }
         }
 
-        return (   
-            <Issues/>
-        )
+        return <Issues/>
     }
 }
-
-export default Question;
